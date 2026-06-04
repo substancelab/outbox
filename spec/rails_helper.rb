@@ -33,6 +33,8 @@ rescue ActiveRecord::PendingMigrationError => error
   abort error.to_s.strip
 end
 RSpec.configure do |config|
+  config.include FactoryBot::Syntax::Methods
+
   config.include Capybara::RSpecMatchers, :type => :component
   config.include ViewComponent::TestHelpers, :type => :component
 
