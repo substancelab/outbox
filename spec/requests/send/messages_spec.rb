@@ -1,0 +1,111 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe "POST /send/message", :type => :request do
+  let(:api_key) { "test-api-key" }
+  let(:message) { create(:message) }
+  let(:headers) { {"ACCEPT" => "application/json", "Authorization" => "Bearer #{api_key}"} }
+  let(:body) do
+    {
+      "template_id" => message.slug,
+      "via" => {
+        "email" => {
+          "to" => ["alice@example.com"],
+        },
+      },
+      "variables" => {"name" => "Alice"},
+    }
+  end
+
+  before { allow(Rails.application.credentials).to receive(:outbox_api_key).and_return(api_key) }
+
+  describe "authentication" do
+    context "when no Authorization header is provided" do
+      before { post "/send/message", :headers => {"ACCEPT" => "application/json"}, :params => body, :as => :json }
+
+      it { expect(response).to have_http_status(:unauthorized) }
+      it { expect(response.parsed_body["error"]).to eq("Unauthorized") }
+    end
+
+    context "when an invalid API key is provided" do
+      let(:bad_headers) { headers.merge("Authorization" => "Bearer wrong-key") }
+
+      before { post "/send/message", :headers => bad_headers, :params => body, :as => :json }
+
+      it { expect(response).to have_http_status(:unauthorized) }
+    end
+  end
+
+  describe "request validation" do
+    context "when template_id does not match any message" do
+      let(:body) { super().merge("template_id" => "nonexistent-slug") }
+
+      before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+      it { expect(response).to have_http_status(:unprocessable_content) }
+      it { expect(response.parsed_body["error"]).to eq("Message not found") }
+    end
+
+    context "when no recipients are provided" do
+      let(:body) { super().merge("via" => {"email" => {"to" => []}}) }
+
+      before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+      it { expect(response).to have_http_status(:unprocessable_content) }
+      it { expect(response.parsed_body["error"]).to eq("No recipients provided") }
+    end
+  end
+
+  describe "successful delivery queuing" do
+    before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+    it { expect(response).to have_http_status(:created) }
+    it { expect(response.content_type).to eq("application/json; charset=utf-8") }
+    it { expect(response.parsed_body["delivery_ids"]).to be_an(Array) }
+    it { expect(response.parsed_body["delivery_ids"].length).to eq(1) }
+
+    it "creates a Delivery record per recipient" do
+      delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+      expect(delivery).to have_attributes(
+        :message => message,
+        :recipient_email => "alice@example.com",
+        :status => "pending"
+      )
+    end
+
+    it "enqueues a DeliverEmailJob per delivery" do
+      delivery_id = response.parsed_body["delivery_ids"].first
+      expect(DeliverEmailJob).to have_been_enqueued.with(delivery_id)
+    end
+  end
+
+  describe "multiple recipients" do
+    let(:body) do
+      super().merge("via" => {"email" => {"to" => ["alice@example.com", "bob@example.com"]}})
+    end
+
+    before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+    it { expect(response).to have_http_status(:created) }
+    it { expect(response.parsed_body["delivery_ids"].length).to eq(2) }
+    it { expect(Delivery.count).to eq(2) }
+
+    it "enqueues one job per delivery" do
+      response.parsed_body["delivery_ids"].each do |id|
+        expect(DeliverEmailJob).to have_been_enqueued.with(id)
+      end
+    end
+  end
+
+  describe "variant" do
+    let(:body) { super().merge("variant" => "da") }
+
+    before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+    it "stores the variant on the Delivery" do
+      delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+      expect(delivery.variant).to eq("da")
+    end
+  end
+end
