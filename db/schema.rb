@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_04_201326) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_05_190840) do
   create_table "deliveries", force: :cascade do |t|
     t.integer "message_id", null: false
     t.string "recipient_email", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_04_201326) do
     t.datetime "sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "variables"
     t.index ["message_id"], name: "index_deliveries_on_message_id"
   end
 

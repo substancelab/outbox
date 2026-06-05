@@ -30,6 +30,9 @@ gem "sqlite_crypto" # UUID primary key support for SQLite
 # Liquid template rendering [https://github.com/Shopify/liquid]
 gem "liquid"
 
+# Mailgun email delivery [https://github.com/mailgun/mailgun-ruby]
+gem "mailgun-ruby"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", :platforms => [:windows, :jruby]
 
@@ -80,4 +83,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "webmock"
 end
