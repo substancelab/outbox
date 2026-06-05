@@ -27,6 +27,9 @@ gem "tailwindcss-rails", ">= 4.3.0"
 gem "sqlite3", ">= 2.1"
 gem "sqlite_crypto" # UUID primary key support for SQLite
 
+# Liquid template rendering [https://github.com/Shopify/liquid]
+gem "liquid"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", :platforms => [:windows, :jruby]
 
