@@ -3,8 +3,8 @@
 class Delivery < ApplicationRecord
   belongs_to :message
 
-  enum :status, { pending: "pending", sent: "sent", failed: "failed" }
+  enum :status, {:failed => "failed", :pending => "pending", :sent => "sent"}
 
-  validates :recipient_email, presence: true
-  validates :status, presence: true
+  validates :recipient_email, :presence => true
+  validates :status, :presence => true
 end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe MessageVariant, type: :model do
+RSpec.describe MessageVariant, :type => :model do
   subject(:message_variant) { build_stubbed(:message_variant) }
 
   it { is_expected.to belong_to(:message) }

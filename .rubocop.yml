@@ -106,6 +106,9 @@ Rails/HasAndBelongsToMany:
 Rails/ShortI18n:
   Enabled: false
 
+RSpec/ExampleLength:
+  Enabled: false
+
 RSpec/NamedSubject:
   Enabled: false
 
