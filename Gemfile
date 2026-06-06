@@ -28,6 +28,9 @@ gem "tailwindcss-rails", ">= 4.3.0"
 # Liquid template rendering [https://github.com/Shopify/liquid]
 gem "liquid"
 
+# UUID primary key support for SQLite
+gem "sqlite_crypto"
+
 # Mailgun email delivery [https://github.com/mailgun/mailgun-ruby]
 gem "mailgun-ruby"
 

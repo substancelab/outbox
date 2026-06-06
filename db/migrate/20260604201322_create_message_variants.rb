@@ -2,8 +2,8 @@
 
 class CreateMessageVariants < ActiveRecord::Migration[8.0]
   def change
-    create_table :message_variants do |t|
-      t.references :message, :null => false, :foreign_key => true
+    create_table :message_variants, :id => :uuid do |t|
+      t.references :message, :type => :uuid, :null => false, :foreign_key => true
       t.string :variant, :null => false
       t.text :subject, :null => false
       t.text :html_body, :null => false
