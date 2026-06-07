@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :message_variant do
-    association :message
+    message
     sequence(:variant) { |n| "variant-#{n}" }
     subject { "Hej, {{ name }}" }
     html_body { "<p>Hej, {{ name }}</p>" }

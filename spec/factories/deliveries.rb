@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :delivery do
-    association :message
+    message
     recipient_email { "user@example.com" }
     variant { nil }
     email_message_id { nil }
