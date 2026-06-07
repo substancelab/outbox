@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :message_variant do
+    html_body { "<p>Hej, {{ name }}</p>" }
     message
     sequence(:variant) { |n| "variant-#{n}" }
     subject { "Hej, {{ name }}" }
-    html_body { "<p>Hej, {{ name }}</p>" }
     text_body { "Hej, {{ name }}" }
   end
 end

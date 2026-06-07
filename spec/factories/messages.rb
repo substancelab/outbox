@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :message do
+    html_body { "<p>Hello, {{ name }}</p>" }
+    sender { nil }
     sequence(:slug) { |n| "message-#{n}" }
     subject { "Hello, {{ name }}" }
-    html_body { "<p>Hello, {{ name }}</p>" }
     text_body { "Hello, {{ name }}" }
-    sender { nil }
   end
 end

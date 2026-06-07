@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :provider do
-    provider { "mailgun" }
     api_key { "test-api-key" }
-    sending_domain { "mg.example.com" }
+    provider { "mailgun" }
     sender { "Outbox <outbox@example.com>" }
+    sending_domain { "mg.example.com" }
   end
 end

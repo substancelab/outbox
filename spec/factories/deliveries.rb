@@ -2,12 +2,12 @@
 
 FactoryBot.define do
   factory :delivery do
+    email_message_id { nil }
+    error_message { nil }
     message
     recipient_email { "user@example.com" }
-    variant { nil }
-    email_message_id { nil }
-    status { "pending" }
-    error_message { nil }
     sent_at { nil }
+    status { "pending" }
+    variant { nil }
   end
 end
