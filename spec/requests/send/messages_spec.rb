@@ -99,13 +99,43 @@ RSpec.describe "POST /send/message", :type => :request do
   end
 
   describe "variant" do
-    let(:body) { super().merge("variant" => "da") }
+    let(:adapter_double) { instance_double(MailgunAdapter, :deliver => "<msg@mg.example.com>") }
 
-    before { post "/send/message", :headers => headers, :params => body, :as => :json }
+    before do
+      create(:provider)
+      allow(MailgunAdapter).to receive(:new).and_return(adapter_double)
+    end
 
-    it "stores the variant on the Delivery" do
-      delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
-      expect(delivery.variant).to eq("da")
+    context "when the variant matches a MessageVariant" do
+      before do
+        create(:message_variant, :message => message, :variant => "da")
+        post "/send/message", :headers => headers, :params => body.merge("variant" => "da"), :as => :json
+      end
+
+      it "stores the variant on the Delivery" do
+        delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+        expect(delivery.variant).to eq("da")
+      end
+
+      it "delivers the variant content when the job runs" do
+        delivery_id = response.parsed_body["delivery_ids"].first
+        DeliverEmailJob.perform_now(delivery_id)
+
+        expect(adapter_double).to have_received(:deliver).with(hash_including(:subject => "Hej, Alice"))
+      end
+    end
+
+    context "when the variant does not match any MessageVariant" do
+      before do
+        post "/send/message", :headers => headers, :params => body.merge("variant" => "unknown"), :as => :json
+      end
+
+      it "delivers the base message content when the job runs" do
+        delivery_id = response.parsed_body["delivery_ids"].first
+        DeliverEmailJob.perform_now(delivery_id)
+
+        expect(adapter_double).to have_received(:deliver).with(hash_including(:subject => "Hello, Alice"))
+      end
     end
   end
 end

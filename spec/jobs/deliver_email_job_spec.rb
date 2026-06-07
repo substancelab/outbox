@@ -41,6 +41,33 @@ RSpec.describe DeliverEmailJob, :type => :job do
       expect(MessageRenderer).to have_received(:render).with(message, {"name" => "Alice"})
     end
 
+    context "when a matching variant exists" do
+      let(:variant) { create(:message_variant, :message => message, :variant => "da") }
+      let(:delivery) { create(:delivery, :message => message, :variant => "da", :variables => {}) }
+
+      before { variant }
+
+      it "renders the variant content" do
+        allow(MessageRenderer).to receive(:render).and_call_original
+
+        described_class.perform_now(delivery.id)
+
+        expect(MessageRenderer).to have_received(:render).with(variant, {})
+      end
+    end
+
+    context "when the variant key does not match any variant" do
+      let(:delivery) { create(:delivery, :message => message, :variant => "unknown", :variables => {}) }
+
+      it "renders the base message content" do
+        allow(MessageRenderer).to receive(:render).and_call_original
+
+        described_class.perform_now(delivery.id)
+
+        expect(MessageRenderer).to have_received(:render).with(message, {})
+      end
+    end
+
     it "uses message sender when set" do
       message.update!(:sender => "custom@example.com")
 
