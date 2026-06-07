@@ -37,7 +37,7 @@ module Send
       {
         :message => message, :recipient_email => email,
         :variant => params[:variant],
-        :variables => params[:variables]&.to_unsafe_h, # rubocop:disable Rails/StrongParametersExpect
+        :variables => params[:variables]&.to_unsafe_h,
         :status => :pending
       }
     end
