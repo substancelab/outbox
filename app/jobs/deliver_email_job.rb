@@ -14,16 +14,30 @@ class DeliverEmailJob < ApplicationJob
   private
 
   def send_email(delivery)
-    message = delivery.message
     provider = Provider.sole
-    rendered = MessageRenderer.render(message.resolve_variant(delivery.variant), delivery.variables || {})
-    sender = message.sender.presence || provider.sender
-    build_adapter(provider).deliver(
-      :to => delivery.recipient_email, :from => sender,
-      :subject => rendered.subject,
+    build_adapter(provider).deliver(email_params(delivery, provider))
+  end
+
+  def email_params(delivery, provider)
+    rendered = render_message(delivery)
+    {
+      :to => delivery.recipient_email,
+      :cc => delivery.cc.presence,
+      :bcc => delivery.bcc.presence,
+      :from => resolved_sender(delivery, provider),
+      :subject => delivery.subject_override.presence || rendered.subject,
       :html_body => rendered.html_body,
-      :text_body => rendered.text_body
-    )
+      :text_body => rendered.text_body,
+    }
+  end
+
+  def render_message(delivery)
+    message = delivery.message
+    MessageRenderer.render(message.resolve_variant(delivery.variant), delivery.variables || {})
+  end
+
+  def resolved_sender(delivery, provider)
+    delivery.from_email.presence || delivery.message.sender.presence || provider.sender
   end
 
   def build_adapter(provider)

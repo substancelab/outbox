@@ -98,6 +98,74 @@ RSpec.describe "POST /send/message", :type => :request do
     end
   end
 
+  describe "email delivery overrides" do
+    let(:adapter_double) { instance_double(MailgunAdapter, :deliver => "<msg@mg.example.com>") }
+
+    before do
+      create(:provider)
+      allow(MailgunAdapter).to receive(:new).and_return(adapter_double)
+    end
+
+    context "when cc, bcc, from, and subject are provided" do
+      let(:body) do
+        super().merge(
+          "via" => {
+            "email" => {
+              "to" => ["alice@example.com"],
+              "cc" => ["manager@example.com"],
+              "bcc" => ["archive@example.com"],
+              "from" => "Custom <custom@example.com>",
+              "subject" => "Override subject",
+            },
+          }
+        )
+      end
+
+      before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+      it "stores cc on the Delivery" do
+        delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+        expect(delivery.cc).to eq(["manager@example.com"])
+      end
+
+      it "stores bcc on the Delivery" do
+        delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+        expect(delivery.bcc).to eq(["archive@example.com"])
+      end
+
+      it "stores from_email on the Delivery" do
+        delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+        expect(delivery.from_email).to eq("Custom <custom@example.com>")
+      end
+
+      it "stores subject_override on the Delivery" do
+        delivery = Delivery.find(response.parsed_body["delivery_ids"].first)
+        expect(delivery.subject_override).to eq("Override subject")
+      end
+
+      it "passes cc, bcc, from, and subject override to the adapter" do
+        DeliverEmailJob.perform_now(response.parsed_body["delivery_ids"].first)
+        expect(adapter_double).to have_received(:deliver).with(
+          hash_including(
+            :cc => ["manager@example.com"],
+            :bcc => ["archive@example.com"],
+            :from => "Custom <custom@example.com>",
+            :subject => "Override subject"
+          )
+        )
+      end
+    end
+
+    context "when no overrides are provided" do
+      before { post "/send/message", :headers => headers, :params => body, :as => :json }
+
+      it "uses the template subject" do
+        DeliverEmailJob.perform_now(response.parsed_body["delivery_ids"].first)
+        expect(adapter_double).to have_received(:deliver).with(hash_including(:subject => "Hello, Alice"))
+      end
+    end
+  end
+
   describe "variant" do
     let(:adapter_double) { instance_double(MailgunAdapter, :deliver => "<msg@mg.example.com>") }
 
