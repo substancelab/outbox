@@ -16,7 +16,7 @@ class DeliverEmailJob < ApplicationJob
   def send_email(delivery)
     message = delivery.message
     provider = Provider.sole
-    rendered = MessageRenderer.render(message, delivery.variables || {})
+    rendered = MessageRenderer.render(message.resolve_variant(delivery.variant), delivery.variables || {})
     sender = message.sender.presence || provider.sender
     build_adapter(provider).deliver(
       :to => delivery.recipient_email, :from => sender,

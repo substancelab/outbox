@@ -6,4 +6,10 @@ class Message < ApplicationRecord
 
   validates :slug, :presence => true, :uniqueness => true
   validates :subject, :html_body, :text_body, :presence => true
+
+  def resolve_variant(key)
+    return self if key.blank?
+
+    message_variants.find_by(:variant => key) || self
+  end
 end
