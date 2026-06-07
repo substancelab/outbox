@@ -23,14 +23,32 @@ module Send
     end
 
     def enqueue_delivery(message, email)
-      delivery = Delivery.create!(
+      delivery = Delivery.create!(delivery_attributes(message, email))
+      DeliverEmailJob.perform_later(delivery.id)
+      delivery
+    end
+
+    def delivery_attributes(message, email)
+      email_params = params.dig(:via, :email) || {}
+      base_attributes(message, email).merge(email_override_attributes(email_params))
+    end
+
+    def base_attributes(message, email)
+      {
         :message => message, :recipient_email => email,
         :variant => params[:variant],
         :variables => params[:variables]&.to_unsafe_h, # rubocop:disable Rails/StrongParametersExpect
         :status => :pending
-      )
-      DeliverEmailJob.perform_later(delivery.id)
-      delivery
+      }
+    end
+
+    def email_override_attributes(email_params)
+      {
+        :cc => Array(email_params[:cc]).compact_blank.presence,
+        :bcc => Array(email_params[:bcc]).compact_blank.presence,
+        :from_email => email_params[:from].presence,
+        :subject_override => email_params[:subject].presence,
+      }
     end
 
     def authenticate_api_key

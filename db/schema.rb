@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_05_190840) do
+ActiveRecord::Schema[8.0].define(version: 2026_06_07_103515) do
   create_table "deliveries", id: uuid, force: :cascade do |t|
     t.string "message_id", limit: 36, null: false
     t.string "recipient_email", null: false
@@ -22,6 +22,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_05_190840) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "variables"
+    t.text "cc"
+    t.text "bcc"
+    t.string "from_email"
+    t.string "subject_override"
     t.index ["message_id"], name: "index_deliveries_on_message_id"
   end
 
