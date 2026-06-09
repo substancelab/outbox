@@ -14,7 +14,7 @@ class DeliverEmailJob < ApplicationJob
   private
 
   def send_email(delivery)
-    provider = Provider.sole
+    provider = delivery.workspace.providers.sole
     build_adapter(provider).deliver(email_params(delivery, provider))
   end
 

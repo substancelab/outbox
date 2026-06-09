@@ -102,7 +102,7 @@ RSpec.describe "POST /send/message", :type => :request do
     let(:adapter_double) { instance_double(MailgunAdapter, :deliver => "<msg@mg.example.com>") }
 
     before do
-      create(:provider)
+      create(:provider, :workspace => message.workspace)
       allow(MailgunAdapter).to receive(:new).and_return(adapter_double)
     end
 
@@ -170,7 +170,7 @@ RSpec.describe "POST /send/message", :type => :request do
     let(:adapter_double) { instance_double(MailgunAdapter, :deliver => "<msg@mg.example.com>") }
 
     before do
-      create(:provider)
+      create(:provider, :workspace => message.workspace)
       allow(MailgunAdapter).to receive(:new).and_return(adapter_double)
     end
 

@@ -7,5 +7,6 @@ FactoryBot.define do
     sequence(:slug) { |n| "message-#{n}" }
     subject { "Hello, {{ name }}" }
     text_body { "Hello, {{ name }}" }
+    workspace
   end
 end

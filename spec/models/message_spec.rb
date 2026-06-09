@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe Message, :type => :model do
   subject(:message) { build_stubbed(:message) }
 
+  it { is_expected.to belong_to(:workspace) }
   it { is_expected.to have_many(:message_variants).dependent(:destroy) }
   it { is_expected.to have_many(:deliveries).dependent(:destroy) }
 

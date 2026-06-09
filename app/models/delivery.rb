@@ -2,6 +2,7 @@
 
 class Delivery < ApplicationRecord
   belongs_to :message
+  belongs_to :workspace
 
   enum :status, {:failed => "failed", :pending => "pending", :sent => "sent"}
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Message < ApplicationRecord
+  belongs_to :workspace
   has_many :deliveries, :dependent => :destroy
   has_many :message_variants, :dependent => :destroy
 

@@ -6,5 +6,6 @@ FactoryBot.define do
     provider { "mailgun" }
     sender { "Outbox <outbox@example.com>" }
     sending_domain { "mg.example.com" }
+    workspace
   end
 end

@@ -3,9 +3,10 @@
 require "rails_helper"
 
 RSpec.describe DeliverEmailJob, :type => :job do
-  let!(:provider) { create(:provider, :sender => "default@example.com") }
-  let(:message) { create(:message, :sender => nil) }
+  let!(:provider) { create(:provider, :workspace => workspace, :sender => "default@example.com") }
+  let!(:workspace) { create(:workspace) }
   let(:delivery) { create(:delivery, :message => message, :variables => {"name" => "Alice"}) }
+  let(:message) { create(:message, :workspace => workspace, :sender => nil) }
 
   let(:adapter_double) { instance_double(MailgunAdapter, :deliver => "<msg@mg.example.com>") }
 
@@ -42,17 +43,16 @@ RSpec.describe DeliverEmailJob, :type => :job do
     end
 
     context "when a matching variant exists" do
-      let(:variant) { create(:message_variant, :message => message, :variant => "da") }
       let(:delivery) { create(:delivery, :message => message, :variant => "da", :variables => {}) }
 
-      before { variant }
+      before { create(:message_variant, :message => message, :variant => "da") }
 
       it "renders the variant content" do
         allow(MessageRenderer).to receive(:render).and_call_original
 
         described_class.perform_now(delivery.id)
 
-        expect(MessageRenderer).to have_received(:render).with(variant, {})
+        expect(MessageRenderer).to have_received(:render).with(be_a(MessageVariant), {})
       end
     end
 

@@ -5,6 +5,7 @@ FactoryBot.define do
     email_message_id { nil }
     error_message { nil }
     message
+    workspace { message.workspace }
     recipient_email { "user@example.com" }
     sent_at { nil }
     status { "pending" }

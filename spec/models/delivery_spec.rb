@@ -6,6 +6,7 @@ RSpec.describe Delivery, :type => :model do
   subject(:delivery) { build_stubbed(:delivery) }
 
   it { is_expected.to belong_to(:message) }
+  it { is_expected.to belong_to(:workspace) }
 
   it { is_expected.to validate_presence_of(:recipient_email) }
   it { is_expected.to validate_presence_of(:status) }

@@ -35,10 +35,12 @@ module Send
 
     def base_attributes(message, email)
       {
-        :message => message, :recipient_email => email,
-        :variant => params[:variant],
+        :message => message,
+        :recipient_email => email,
+        :status => :pending,
         :variables => params[:variables]&.to_unsafe_h,
-        :status => :pending
+        :variant => params[:variant],
+        :workspace => message.workspace,
       }
     end
 
