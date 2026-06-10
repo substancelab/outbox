@@ -44,56 +44,53 @@
   <div class="p-6 bg-neutral-primary rounded-lg border border-default space-y-4">
     <h2 class="text-base font-semibold text-heading"><%= translate("messages.form.body_section") %></h2>
 
-    <div
-      class="border-b border-default"
-      data-tabs-toggle="#body-tabs-content"
-      id="body-tabs"
-      role="tablist"
-    >
-      <ul class="flex -mb-px text-sm font-medium text-center" id="body-tabs-list">
-        <li class="me-2" role="presentation">
-          <button
-            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-body-secondary hover:border-default aria-selected:border-brand aria-selected:text-fg-brand"
-            id="html-tab"
-            data-tabs-target="#html-content"
-            type="button"
-            role="tab"
-            aria-controls="html-content"
-            aria-selected="true"
-          ><%= translate("messages.form.html_tab") %></button>
-        </li>
-        <li class="me-2" role="presentation">
-          <button
-            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-body-secondary hover:border-default aria-selected:border-brand aria-selected:text-fg-brand"
-            id="text-tab"
-            data-tabs-target="#text-content"
-            type="button"
-            role="tab"
-            aria-controls="text-content"
-            aria-selected="false"
-          ><%= translate("messages.form.text_tab") %></button>
-        </li>
-      </ul>
-    </div>
-
-    <div id="body-tabs-content">
-      <div id="html-content" role="tabpanel" aria-labelledby="html-tab">
-        <%= render(Flowbite::InputField::Textarea.new(
-          attribute: :html_body,
-          form: f,
-          hint: {:content => translate("messages.form.template_hint")},
-          label: {:content => translate("messages.form.html_body")},
-          input: {:options => {:rows => 16}}
-        )) %>
+    <div data-controller="tabs">
+      <div class="border-b border-default" role="tablist">
+        <ul class="flex -mb-px text-sm font-medium text-center">
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-body-secondary hover:border-default aria-selected:border-brand aria-selected:text-fg-brand"
+              type="button"
+              role="tab"
+              aria-controls="html-content"
+              data-tabs-target="tab"
+              data-tabs-panel="#html-content"
+              data-action="tabs#show"
+            ><%= translate("messages.form.html_tab") %></button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-body-secondary hover:border-default aria-selected:border-brand aria-selected:text-fg-brand"
+              type="button"
+              role="tab"
+              aria-controls="text-content"
+              data-tabs-target="tab"
+              data-tabs-panel="#text-content"
+              data-action="tabs#show"
+            ><%= translate("messages.form.text_tab") %></button>
+          </li>
+        </ul>
       </div>
-      <div id="text-content" class="hidden" role="tabpanel" aria-labelledby="text-tab">
-        <%= render(Flowbite::InputField::Textarea.new(
-          attribute: :text_body,
-          form: f,
-          hint: {:content => translate("messages.form.template_hint")},
-          label: {:content => translate("messages.form.text_body")},
-          input: {:options => {:rows => 16, :class => "font-mono"}}
-        )) %>
+
+      <div class="mt-4">
+        <div id="html-content" role="tabpanel">
+          <%= render(Flowbite::InputField::Textarea.new(
+            attribute: :html_body,
+            form: f,
+            hint: {:content => translate("messages.form.template_hint")},
+            label: {:content => translate("messages.form.html_body")},
+            input: {:options => {:rows => 16}}
+          )) %>
+        </div>
+        <div id="text-content" role="tabpanel">
+          <%= render(Flowbite::InputField::Textarea.new(
+            attribute: :text_body,
+            form: f,
+            hint: {:content => translate("messages.form.template_hint")},
+            label: {:content => translate("messages.form.text_body")},
+            input: {:options => {:rows => 16}}
+          )) %>
+        </div>
       </div>
     </div>
   </div>
