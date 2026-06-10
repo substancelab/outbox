@@ -28,14 +28,13 @@
     <div class="flex h-full @container">
       <%= render "layouts/navigation/primary" %>
 
-      <nav class="w-64 h-full p-4 transition-transform border-e border-default">
-        <%= render(UI::NavigationItem.new(:href => "/somewhere")) do |item| %>
-          <% item.with_label { "Secondary nav" } %>
-        <% end %>
-        <!-- TODO: This might not always be there -->
-      </nav>
+      <% if content_for?(:secondary_nav) %>
+        <nav class="w-64 h-full overflow-y-auto transition-transform border-e border-default">
+          <%= yield :secondary_nav %>
+        </nav>
+      <% end %>
 
-      <main class="p-4">
+      <main class="flex-1 overflow-y-auto">
         <%= yield %>
       </main>
     </div>

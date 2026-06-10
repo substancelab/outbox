@@ -15,7 +15,7 @@
   >
     <ul class="space-y-2 font-medium">
       <li>
-        <%= render(UI::NavigationItem.new(:href => "#")) do |item| %>
+        <%= render(UI::NavigationItem.new(:href => root_path)) do |item| %>
           <% item.with_icon do %>
             <svg
               class="w-5 h-5 transition duration-75 group-hover:text-fg-brand"
@@ -43,7 +43,32 @@
               />
             </svg>
           <% end %>
-          <% item.with_label { "Dashboard" } %>
+          <% item.with_label { translate("navigation.dashboard") } %>
+        <% end %>
+      </li>
+
+      <li>
+        <%= render(UI::NavigationItem.new(:href => messages_path)) do |item| %>
+          <% item.with_icon do %>
+            <svg
+              class="w-5 h-5 transition duration-75 group-hover:text-fg-brand"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 18V8a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm0-10 8 6 8-6"
+              />
+            </svg>
+          <% end %>
+          <% item.with_label { translate("navigation.messages") } %>
         <% end %>
       </li>
 

@@ -1,0 +1,43 @@
+<% content_for :title, translate(".title") %>
+
+<div class="p-4">
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-heading"><%= translate(".title") %></h1>
+    <p class="mt-1 text-sm text-body-secondary"><%= translate(".description") %></p>
+  </div>
+
+  <div class="relative overflow-x-auto rounded-lg border border-default bg-neutral-primary">
+    <table class="w-full text-sm text-left text-body">
+      <thead class="text-xs text-body-secondary uppercase bg-neutral-primary-soft border-b border-default">
+        <tr>
+          <th scope="col" class="px-6 py-3"><%= translate(".columns.slug") %></th>
+          <th scope="col" class="px-6 py-3"><%= translate(".columns.subject") %></th>
+          <th scope="col" class="px-6 py-3"><%= translate(".columns.sender") %></th>
+          <th scope="col" class="px-6 py-3"><span class="sr-only"><%= translate(".columns.actions") %></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @messages.each do |message| %>
+          <tr class="border-b border-default hover:bg-neutral-primary-soft">
+            <td class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+              <code class="text-sm bg-neutral-secondary-soft px-1.5 py-0.5 rounded text-fg-brand"><%= message.slug %></code>
+            </td>
+            <td class="px-6 py-4"><%= message.subject %></td>
+            <td class="px-6 py-4 text-body-secondary"><%= message.sender.presence || translate(".no_sender") %></td>
+            <td class="px-6 py-4 text-right">
+              <%= link_to translate(".edit"), edit_message_path(message),
+                class: "font-medium text-fg-brand hover:underline" %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @messages.empty? %>
+          <tr>
+            <td colspan="4" class="px-6 py-10 text-center text-body-secondary">
+              <%= translate(".empty") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
