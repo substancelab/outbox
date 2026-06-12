@@ -28,7 +28,7 @@
         attribute: :subject,
         form: f,
         label: {:content => translate("messages.form.subject")},
-        input: {:options => {:placeholder => translate("messages.form.subject_placeholder")}}
+        input: {:class => "font-mono", :options => {:placeholder => translate("messages.form.subject_placeholder")}}
       )) %>
 
       <%= render(Flowbite::InputField::Text.new(
@@ -79,7 +79,7 @@
             form: f,
             hint: {:content => translate("messages.form.template_hint")},
             label: {:content => translate("messages.form.html_body")},
-            input: {:options => {:rows => 16}}
+            input: {:class => "font-mono", :options => {:rows => 16}}
           )) %>
         </div>
         <div id="text-content" role="tabpanel">
@@ -88,7 +88,7 @@
             form: f,
             hint: {:content => translate("messages.form.template_hint")},
             label: {:content => translate("messages.form.text_body")},
-            input: {:options => {:rows => 16}}
+            input: {:class => "font-mono", :options => {:rows => 16}}
           )) %>
         </div>
       </div>
