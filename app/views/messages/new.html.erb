@@ -1,0 +1,14 @@
+<% content_for :title, translate(".title") %>
+
+<div class="p-4 max-w-4xl">
+  <div class="mb-6 flex items-center gap-2">
+    <%= link_to workspace_messages_path(current_workspace), class: "text-body-secondary hover:text-heading" do %>
+      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
+      </svg>
+    <% end %>
+    <h1 class="text-2xl font-semibold text-heading"><%= translate(".title") %></h1>
+  </div>
+
+  <%= render "form", :message => @message %>
+</div>

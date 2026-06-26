@@ -1,5 +1,7 @@
 en:
   messages:
+    create:
+      success: "Message created."
     edit:
       title: "Edit %{slug}"
     form:
@@ -14,6 +16,7 @@ en:
       sender_placeholder: "e.g. Acme <hello@acme.com>"
       slug: "Template ID"
       slug_hint: "Used in API calls as template_id. Cannot be changed."
+      slug_hint_new: "Used in API calls as template_id. Choose carefully — it cannot be changed later."
       subject: "Subject"
       subject_placeholder: "e.g. Welcome to Acme, {{name}}"
       template_hint: "Supports Liquid template syntax: {{ variable }}, {% if condition %}, etc."
@@ -28,8 +31,11 @@ en:
       description: "Email templates used to send transactional messages."
       edit: "Edit"
       empty: "No messages yet."
+      new: "New message"
       no_sender: "Default"
       title: "Messages"
+    new:
+      title: "New message"
     update:
       success: "Message saved."
   navigation:

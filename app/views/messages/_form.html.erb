@@ -17,9 +17,9 @@
 
     <%= render(Flowbite::InputField::Text.new(
       attribute: :slug,
-      disabled: true,
+      disabled: message.persisted?,
       form: f,
-      hint: {:content => translate("messages.form.slug_hint")},
+      hint: {:content => translate(message.persisted? ? "messages.form.slug_hint" : "messages.form.slug_hint_new")},
       label: {:content => translate("messages.form.slug")}
     )) %>
 
