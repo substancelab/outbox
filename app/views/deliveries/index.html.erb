@@ -6,14 +6,14 @@
     <p class="mt-1 text-sm text-body-secondary"><%= translate(".description") %></p>
   </div>
 
-  <div class="relative overflow-x-auto rounded-lg border border-default bg-neutral-primary">
-    <table class="w-full text-sm text-left text-body">
-      <thead class="text-xs text-body-secondary uppercase bg-neutral-primary-soft border-b border-default">
+  <div class="relative overflow-x-auto shadow-xs rounded-base border border-default bg-neutral-primary-soft">
+    <table class="w-full text-sm text-left rtl:text-right text-body">
+      <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
         <tr>
-          <th scope="col" class="px-6 py-3"><%= translate(".columns.sent_at") %></th>
-          <th scope="col" class="px-6 py-3"><%= translate(".columns.message") %></th>
-          <th scope="col" class="px-6 py-3"><%= translate(".columns.recipient") %></th>
-          <th scope="col" class="px-6 py-3"><%= translate(".columns.status") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.sent_at") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.message") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.recipient") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.status") %></th>
         </tr>
       </thead>
       <tbody>
