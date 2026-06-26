@@ -36,5 +36,17 @@ en:
     dashboard: "Dashboard"
     messages: "Messages"
   workspaces:
+    create:
+      success: "Workspace created."
+    form:
+      cancel: "Cancel"
+      description: "Description"
+      description_placeholder: "e.g. Production email templates"
+      name: "Name"
+      name_placeholder: "e.g. Acme Corp"
+      save: "Create workspace"
+    new:
+      description: "Workspaces let you organize messages and settings separately."
+      title: "New workspace"
     switcher:
-      label: "Switch workspace"
+      new: "New workspace"

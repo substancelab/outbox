@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "dashboards#show"
 
-  resources :workspaces, :only => [] do
+  resources :workspaces, :only => [:new, :create] do
     resources :messages, :only => [:index, :show, :edit, :update]
   end
 
