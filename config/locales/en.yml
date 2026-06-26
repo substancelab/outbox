@@ -35,6 +35,50 @@ en:
   navigation:
     dashboard: "Dashboard"
     messages: "Messages"
+    providers: "Providers"
+  providers:
+    create:
+      success: "Provider added."
+    destroy:
+      success: "Provider removed."
+    edit:
+      title: "Edit %{sender}"
+    form:
+      api_key: "API key"
+      api_key_hint: "Your provider API key. Stored encrypted."
+      api_key_hint_edit: "Leave blank to keep the existing API key."
+      api_key_placeholder_edit: "••••••••"
+      cancel: "Cancel"
+      create: "Add provider"
+      credentials_section: "Credentials"
+      details_section: "Details"
+      provider: "Provider"
+      save: "Save provider"
+      sender: "Default sender"
+      sender_hint: "Used when a message has no sender set."
+      sender_placeholder: "e.g. Acme <hello@acme.com>"
+      sending_domain: "Sending domain"
+      sending_domain_hint: "The domain configured in your provider account."
+      sending_domain_placeholder: "e.g. mail.acme.com"
+    index:
+      columns:
+        actions: "Actions"
+        provider: "Provider"
+        sender: "Default sender"
+        sending_domain: "Sending domain"
+      confirm_delete: "Remove %{sender}? This cannot be undone."
+      delete: "Remove"
+      description: "Email delivery providers for this workspace."
+      edit: "Edit"
+      empty: "No providers yet."
+      new: "Add provider"
+      title: "Providers"
+    new:
+      title: "Add provider"
+    types:
+      mailgun: "Mailgun"
+    update:
+      success: "Provider saved."
   workspaces:
     create:
       success: "Workspace created."

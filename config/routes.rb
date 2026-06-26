@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :workspaces, :only => [:new, :create] do
     resources :messages, :only => [:index, :show, :edit, :update]
+    resources :providers
   end
 
   namespace :send do

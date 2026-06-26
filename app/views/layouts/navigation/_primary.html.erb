@@ -125,6 +125,31 @@
       </li>
 
       <li>
+        <%= render(UI::NavigationItem.new(:href => workspace_providers_path(current_workspace))) do |item| %>
+          <% item.with_icon do %>
+            <svg
+              class="w-5 h-5 transition duration-75 group-hover:text-fg-brand"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19.5 12c0-.339-.035-.67-.1-.99L21 9.5l-1.5-2.598-1.8.692a6.99 6.99 0 0 0-1.714-.99L15.5 4.5h-3l-.486 2.104a6.99 6.99 0 0 0-1.714.99L8.5 6.902 7 9.5l1.6 1.51c-.065.32-.1.651-.1.99s.035.67.1.99L7 14.5l1.5 2.598 1.8-.692c.536.395 1.12.72 1.714.99L12.5 19.5h3l.486-2.104a6.99 6.99 0 0 0 1.714-.99l1.8.692L21 14.5l-1.6-1.51c.065-.32.1-.651.1-.99ZM12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"
+              />
+            </svg>
+          <% end %>
+          <% item.with_label { translate("navigation.providers") } %>
+        <% end %>
+      </li>
+
+      <li>
         <%= render(UI::NavigationItem.new(:href => "#kanban")) do |item| %>
           <% item.with_badge do %>
             <span

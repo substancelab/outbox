@@ -1,0 +1,61 @@
+<%= form_with model: [current_workspace, provider], class: "space-y-6" do |f| %>
+  <% if provider.errors.any? %>
+    <div class="flex items-start p-4 rounded-lg border bg-danger-soft border-danger-subtle text-fg-danger" role="alert">
+      <svg class="shrink-0 w-4 h-4 me-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+      </svg>
+      <ul class="list-disc list-inside text-sm">
+        <% provider.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="p-6 bg-neutral-primary rounded-lg border border-default space-y-4">
+    <h2 class="text-base font-semibold text-heading"><%= translate("providers.form.details_section") %></h2>
+
+    <%= render(Flowbite::InputField::Select.new(
+      attribute: :provider,
+      form: f,
+      collection: Provider::TYPES.map { |type| [translate("providers.types.#{type}"), type] },
+      label: {:content => translate("providers.form.provider")}
+    )) %>
+
+    <%= render(Flowbite::InputField::Text.new(
+      attribute: :sender,
+      form: f,
+      hint: {:content => translate("providers.form.sender_hint")},
+      label: {:content => translate("providers.form.sender")},
+      input: {:options => {:placeholder => translate("providers.form.sender_placeholder")}}
+    )) %>
+
+    <%= render(Flowbite::InputField::Text.new(
+      attribute: :sending_domain,
+      form: f,
+      hint: {:content => translate("providers.form.sending_domain_hint")},
+      label: {:content => translate("providers.form.sending_domain")},
+      input: {:options => {:placeholder => translate("providers.form.sending_domain_placeholder")}}
+    )) %>
+  </div>
+
+  <div class="p-6 bg-neutral-primary rounded-lg border border-default space-y-4">
+    <h2 class="text-base font-semibold text-heading"><%= translate("providers.form.credentials_section") %></h2>
+
+    <%= render(Flowbite::InputField::Text.new(
+      attribute: :api_key,
+      form: f,
+      hint: {:content => provider.persisted? ? translate("providers.form.api_key_hint_edit") : translate("providers.form.api_key_hint")},
+      label: {:content => translate("providers.form.api_key")},
+      input: {:options => {:type => "password", :autocomplete => "off", :placeholder => provider.persisted? ? translate("providers.form.api_key_placeholder_edit") : nil}}
+    )) %>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= render(Flowbite::Button.new(:type => :submit)) do %>
+      <%= provider.persisted? ? translate("providers.form.save") : translate("providers.form.create") %>
+    <% end %>
+    <%= link_to translate("providers.form.cancel"), workspace_providers_path(current_workspace),
+      :class => Flowbite::Button.classes(:style => :ghost) %>
+  </div>
+<% end %>
