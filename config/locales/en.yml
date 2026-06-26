@@ -35,3 +35,6 @@ en:
   navigation:
     dashboard: "Dashboard"
     messages: "Messages"
+  workspaces:
+    switcher:
+      label: "Switch workspace"

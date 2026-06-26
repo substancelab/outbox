@@ -6,16 +6,16 @@ class MessagesController < ApplicationController
   def edit; end
 
   def index
-    @messages = Message.order(:slug)
+    @messages = current_workspace.messages.order(:slug)
   end
 
   def show
-    redirect_to edit_message_path(@message)
+    redirect_to edit_workspace_message_path(current_workspace, @message)
   end
 
   def update
     if @message.update(message_params)
-      redirect_to edit_message_path(@message), :notice => t(".success")
+      redirect_to edit_workspace_message_path(current_workspace, @message), :notice => t(".success")
     else
       render :edit, :status => :unprocessable_content
     end
@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
   private
 
   def set_message
-    @message = Message.find(params.expect(:id)) if params[:id]
+    @message = current_workspace.messages.find(params.expect(:id)) if params[:id]
   end
 
   def message_params

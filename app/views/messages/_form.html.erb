@@ -1,4 +1,4 @@
-<%= form_with model: message, class: "space-y-6" do |f| %>
+<%= form_with model: [current_workspace, message], class: "space-y-6" do |f| %>
   <% if message.errors.any? %>
     <div class="flex items-start p-4 rounded-lg border bg-danger-soft border-danger-subtle text-fg-danger" role="alert">
       <svg class="shrink-0 w-4 h-4 me-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -99,7 +99,7 @@
     <%= render(Flowbite::Button.new(:type => :submit)) do %>
       <%= translate("messages.form.save") %>
     <% end %>
-    <%= link_to translate("messages.form.cancel"), messages_path,
+    <%= link_to translate("messages.form.cancel"), workspace_messages_path(current_workspace),
       class: "
         text-body bg-neutral-primary hover:bg-neutral-tertiary
         focus:ring-4 focus:ring-default border border-default font-medium rounded-lg

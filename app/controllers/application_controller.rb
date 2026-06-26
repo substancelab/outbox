@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
   allow_browser :versions => :modern
 
   before_action :authenticate_with_http_basic_if_configured
+  before_action :set_workspaces
+
+  helper_method :current_workspace
 
   private
 
@@ -17,5 +20,17 @@ class ApplicationController < ActionController::Base
       ActiveSupport::SecurityUtils.secure_compare(u, username) &&
         ActiveSupport::SecurityUtils.secure_compare(p, password)
     end
+  end
+
+  def current_workspace
+    @current_workspace ||= if params[:workspace_id]
+      Workspace.find(params.expect(:workspace_id))
+    else
+      Workspace.first!
+    end
+  end
+
+  def set_workspaces
+    @workspaces = Workspace.order(:name)
   end
 end
