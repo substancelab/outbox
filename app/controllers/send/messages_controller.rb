@@ -3,6 +3,7 @@
 module Send
   class MessagesController < ApplicationController
     skip_before_action :verify_authenticity_token
+    skip_before_action :authenticate_with_http_basic_if_configured
     before_action :authenticate_api_key
 
     def create

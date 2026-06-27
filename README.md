@@ -1,3 +1,22 @@
+# Outbox
+
+## Configuration
+
+### HTTP Basic Authentication
+
+The web UI can be protected with HTTP Basic authentication by setting both environment variables:
+
+```
+HTTP_BASIC_AUTH_USERNAME=<username>
+HTTP_BASIC_AUTH_PASSWORD=<password>
+```
+
+When either variable is absent, Basic authentication is disabled and the application is publicly accessible.
+
+The API endpoints (e.g. `POST /send/message`) are not affected by this setting — they use API key authentication instead.
+
+---
+
 # Substance Lab Rails Application Boilerplate
 
 A solid foundation for how we want to build Rails applications anno 2026.
