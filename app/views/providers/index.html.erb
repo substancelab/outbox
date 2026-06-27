@@ -1,0 +1,55 @@
+<% content_for :title, translate(".title") %>
+
+<div class="p-4">
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold text-heading"><%= translate(".title") %></h1>
+      <p class="mt-1 text-sm text-body-secondary"><%= translate(".description") %></p>
+    </div>
+    <%= link_to translate(".new"), new_workspace_provider_path(current_workspace),
+      class: Flowbite::Button.classes %>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-xs rounded-base border border-default bg-neutral-primary-soft">
+    <table class="w-full text-sm text-left rtl:text-right text-body">
+      <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+        <tr>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.provider") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.sender") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.sending_domain") %></th>
+          <th scope="col" class="px-6 py-3"><span class="sr-only"><%= translate(".columns.actions") %></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @providers.each do |provider| %>
+          <tr class="border-b border-default hover:bg-neutral-primary-soft">
+            <td class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+              <%= translate("providers.types.#{provider.provider}") %>
+            </td>
+            <td class="px-6 py-4"><%= provider.sender %></td>
+            <td class="px-6 py-4 text-body-secondary">
+              <code class="text-sm bg-neutral-secondary-soft px-1.5 py-0.5 rounded"><%= provider.sending_domain %></code>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex items-center justify-end gap-4">
+                <%= link_to translate(".edit"), edit_workspace_provider_path(current_workspace, provider),
+                  class: "font-medium text-fg-brand hover:underline" %>
+                <%= button_to translate(".delete"), workspace_provider_path(current_workspace, provider),
+                  :method => :delete,
+                  :data => {:turbo_confirm => translate(".confirm_delete", :sender => provider.sender)},
+                  :class => "font-medium text-fg-danger hover:underline" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        <% if @providers.empty? %>
+          <tr>
+            <td colspan="4" class="px-6 py-10 text-center text-body-secondary">
+              <%= translate(".empty") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

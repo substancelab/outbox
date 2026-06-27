@@ -1,0 +1,109 @@
+<%= form_with model: [current_workspace, message], class: "space-y-6" do |f| %>
+  <% if message.errors.any? %>
+    <div class="flex items-start p-4 rounded-lg border bg-danger-soft border-danger-subtle text-fg-danger" role="alert">
+      <svg class="shrink-0 w-4 h-4 me-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+      </svg>
+      <ul class="list-disc list-inside text-sm">
+        <% message.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="p-6 bg-neutral-primary rounded-lg border border-default space-y-4">
+    <h2 class="text-base font-semibold text-heading"><%= translate("messages.form.metadata_section") %></h2>
+
+    <%= render(Flowbite::InputField::Text.new(
+      attribute: :slug,
+      disabled: message.persisted?,
+      form: f,
+      hint: {:content => translate(message.persisted? ? "messages.form.slug_hint" : "messages.form.slug_hint_new")},
+      label: {:content => translate("messages.form.slug")}
+    )) %>
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <%= render(Flowbite::InputField::Text.new(
+        attribute: :subject,
+        form: f,
+        label: {:content => translate("messages.form.subject")},
+        input: {:class => "font-mono", :options => {:placeholder => translate("messages.form.subject_placeholder")}}
+      )) %>
+
+      <%= render(Flowbite::InputField::Text.new(
+        attribute: :sender,
+        form: f,
+        hint: {:content => translate("messages.form.sender_hint")},
+        label: {:content => translate("messages.form.sender")},
+        input: {:options => {:placeholder => translate("messages.form.sender_placeholder")}}
+      )) %>
+    </div>
+  </div>
+
+  <div class="p-6 bg-neutral-primary rounded-lg border border-default space-y-4">
+    <h2 class="text-base font-semibold text-heading"><%= translate("messages.form.body_section") %></h2>
+
+    <div data-controller="tabs">
+      <div class="border-b border-default" role="tablist">
+        <ul class="flex -mb-px text-sm font-medium text-center">
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-body-secondary hover:border-default aria-selected:border-brand aria-selected:text-fg-brand"
+              type="button"
+              role="tab"
+              aria-controls="html-content"
+              data-tabs-target="tab"
+              data-tabs-panel="#html-content"
+              data-action="tabs#show"
+            ><%= translate("messages.form.html_tab") %></button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-body-secondary hover:border-default aria-selected:border-brand aria-selected:text-fg-brand"
+              type="button"
+              role="tab"
+              aria-controls="text-content"
+              data-tabs-target="tab"
+              data-tabs-panel="#text-content"
+              data-action="tabs#show"
+            ><%= translate("messages.form.text_tab") %></button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-4">
+        <div id="html-content" role="tabpanel">
+          <%= render(Flowbite::InputField::Textarea.new(
+            attribute: :html_body,
+            form: f,
+            hint: {:content => translate("messages.form.template_hint")},
+            label: {:content => translate("messages.form.html_body")},
+            input: {:class => "font-mono", :options => {:rows => 16}}
+          )) %>
+        </div>
+        <div id="text-content" role="tabpanel">
+          <%= render(Flowbite::InputField::Textarea.new(
+            attribute: :text_body,
+            form: f,
+            hint: {:content => translate("messages.form.template_hint")},
+            label: {:content => translate("messages.form.text_body")},
+            input: {:class => "font-mono", :options => {:rows => 16}}
+          )) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= render(Flowbite::Button.new(:type => :submit)) do %>
+      <%= translate("messages.form.save") %>
+    <% end %>
+    <%= link_to translate("messages.form.cancel"), workspace_messages_path(current_workspace),
+      class: "
+        text-body bg-neutral-primary hover:bg-neutral-tertiary
+        focus:ring-4 focus:ring-default border border-default font-medium rounded-lg
+        text-sm px-5 py-2.5 focus:outline-none
+      " %>
+  </div>
+<% end %>

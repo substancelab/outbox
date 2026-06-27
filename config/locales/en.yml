@@ -1,31 +1,117 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  messages:
+    create:
+      success: "Message created."
+    edit:
+      title: "Edit %{slug}"
+    form:
+      body_section: "Content"
+      cancel: "Cancel"
+      html_body: "HTML body"
+      html_tab: "HTML"
+      metadata_section: "Details"
+      save: "Save message"
+      sender: "Sender"
+      sender_hint: "Overrides the workspace default sender when set."
+      sender_placeholder: "e.g. Acme <hello@acme.com>"
+      slug: "Template ID"
+      slug_hint: "Used in API calls as template_id. Cannot be changed."
+      slug_hint_new: "Used in API calls as template_id. Choose carefully — it cannot be changed later."
+      subject: "Subject"
+      subject_placeholder: "e.g. Welcome to Acme, {{name}}"
+      template_hint: "Supports Liquid template syntax: {{ variable }}, {% if condition %}, etc."
+      text_body: "Plain text body"
+      text_tab: "Plain text"
+    index:
+      columns:
+        actions: "Actions"
+        sender: "Sender"
+        slug: "Template ID"
+        subject: "Subject"
+      description: "Email templates used to send transactional messages."
+      edit: "Edit"
+      empty: "No messages yet."
+      new: "New message"
+      no_sender: "Default"
+      title: "Messages"
+    new:
+      title: "New message"
+    update:
+      success: "Message saved."
+  deliveries:
+    index:
+      columns:
+        message: "Message"
+        recipient: "Recipient"
+        sent_at: "Sent at"
+        status: "Status"
+      description: "A log of all emails sent from this workspace."
+      empty: "No deliveries yet."
+      statuses:
+        failed: "Failed"
+        pending: "Pending"
+        sent: "Sent"
+      title: "Deliveries"
+  navigation:
+    dashboard: "Dashboard"
+    deliveries: "Deliveries"
+    messages: "Messages"
+    providers: "Providers"
+  providers:
+    create:
+      success: "Provider added."
+    destroy:
+      success: "Provider removed."
+    edit:
+      title: "Edit %{sender}"
+    form:
+      api_key: "API key"
+      api_key_hint: "Your provider API key. Stored encrypted."
+      api_key_hint_edit: "Leave blank to keep the existing API key."
+      api_key_placeholder_edit: "••••••••"
+      cancel: "Cancel"
+      create: "Add provider"
+      credentials_section: "Credentials"
+      details_section: "Details"
+      provider: "Provider"
+      save: "Save provider"
+      sender: "Default sender"
+      sender_hint: "Used when a message has no sender set."
+      sender_placeholder: "e.g. Acme <hello@acme.com>"
+      sending_domain: "Sending domain"
+      sending_domain_hint: "The domain configured in your provider account."
+      sending_domain_placeholder: "e.g. mail.acme.com"
+    index:
+      columns:
+        actions: "Actions"
+        provider: "Provider"
+        sender: "Default sender"
+        sending_domain: "Sending domain"
+      confirm_delete: "Remove %{sender}? This cannot be undone."
+      delete: "Remove"
+      description: "Email delivery providers for this workspace."
+      edit: "Edit"
+      empty: "No providers yet."
+      new: "Add provider"
+      title: "Providers"
+    new:
+      title: "Add provider"
+    types:
+      mailgun: "Mailgun"
+    update:
+      success: "Provider saved."
+  workspaces:
+    create:
+      success: "Workspace created."
+    form:
+      cancel: "Cancel"
+      description: "Description"
+      description_placeholder: "e.g. Production email templates"
+      name: "Name"
+      name_placeholder: "e.g. Acme Corp"
+      save: "Create workspace"
+    new:
+      description: "Workspaces let you organize messages and settings separately."
+      title: "New workspace"
+    switcher:
+      new: "New workspace"

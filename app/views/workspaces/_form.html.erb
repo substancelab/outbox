@@ -1,0 +1,38 @@
+<%= form_with model: workspace, class: "space-y-6" do |f| %>
+  <% if workspace.errors.any? %>
+    <div class="flex items-start p-4 rounded-lg border bg-danger-soft border-danger-subtle text-fg-danger" role="alert">
+      <svg class="shrink-0 w-4 h-4 me-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+      </svg>
+      <ul class="list-disc list-inside text-sm">
+        <% workspace.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="p-6 bg-neutral-primary rounded-lg border border-default space-y-4">
+    <%= render(Flowbite::InputField::Text.new(
+      attribute: :name,
+      form: f,
+      label: {:content => translate("workspaces.form.name")},
+      input: {:options => {:placeholder => translate("workspaces.form.name_placeholder"), :autofocus => true}}
+    )) %>
+
+    <%= render(Flowbite::InputField::Text.new(
+      attribute: :description,
+      form: f,
+      label: {:content => translate("workspaces.form.description")},
+      input: {:options => {:placeholder => translate("workspaces.form.description_placeholder")}}
+    )) %>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= render(Flowbite::Button.new(:type => :submit)) do %>
+      <%= translate("workspaces.form.save") %>
+    <% end %>
+    <%= link_to translate("workspaces.form.cancel"), root_path,
+      :class => Flowbite::Button.classes(:style => :ghost) %>
+  </div>
+<% end %>

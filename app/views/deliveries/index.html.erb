@@ -1,0 +1,54 @@
+<% content_for :title, translate(".title") %>
+
+<div class="p-4">
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-heading"><%= translate(".title") %></h1>
+    <p class="mt-1 text-sm text-body-secondary"><%= translate(".description") %></p>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-xs rounded-base border border-default bg-neutral-primary-soft">
+    <table class="w-full text-sm text-left rtl:text-right text-body">
+      <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+        <tr>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.sent_at") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.message") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.recipient") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.status") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @deliveries.each do |delivery| %>
+          <tr class="border-b border-default last:border-0 hover:bg-neutral-primary-soft">
+            <td class="px-6 py-4 text-body-secondary whitespace-nowrap">
+              <%= delivery.sent_at&.strftime("%Y-%m-%d %H:%M") || delivery.created_at.strftime("%Y-%m-%d %H:%M") %>
+            </td>
+            <td class="px-6 py-4 font-medium text-heading">
+              <code class="text-sm bg-neutral-secondary-soft px-1.5 py-0.5 rounded text-fg-brand"><%= delivery.message.slug %></code>
+            </td>
+            <td class="px-6 py-4"><%= delivery.recipient_email %></td>
+            <td class="px-6 py-4">
+              <% status_classes = case delivery.status
+                when "sent"    then "bg-success-soft text-fg-success border-success-subtle"
+                when "failed"  then "bg-danger-soft text-fg-danger border-danger-subtle"
+                else                "bg-neutral-secondary-soft text-body-secondary border-default"
+              end %>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border <%= status_classes %>">
+                <%= translate(".statuses.#{delivery.status}") %>
+              </span>
+              <% if delivery.error_message.present? %>
+                <p class="mt-1 text-xs text-fg-danger"><%= delivery.error_message %></p>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @deliveries.empty? %>
+          <tr>
+            <td colspan="4" class="px-6 py-10 text-center text-body-secondary">
+              <%= translate(".empty") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
