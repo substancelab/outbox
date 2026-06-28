@@ -86,6 +86,7 @@ RSpec.describe DeliverEmailJob, :type => :job do
       described_class.perform_now(delivery.id)
 
       expect(MailgunAdapter).to have_received(:new).with(
+        :api_host => provider.api_host,
         :api_key => provider.api_key,
         :sending_domain => provider.sending_domain
       )

@@ -42,7 +42,7 @@ class ProvidersController < ApplicationController
   private
 
   def provider_params
-    params.expect(:provider => [:provider, :sender, :sending_domain, :api_key])
+    params.expect(:provider => [:provider, :sender, :sending_domain, :api_host, :api_key])
   end
 
   def update_params

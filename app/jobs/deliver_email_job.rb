@@ -41,6 +41,10 @@ class DeliverEmailJob < ApplicationJob
   end
 
   def build_adapter(provider)
-    MailgunAdapter.new(:api_key => provider.api_key, :sending_domain => provider.sending_domain)
+    MailgunAdapter.new(
+      :api_host => provider.api_host,
+      :api_key => provider.api_key,
+      :sending_domain => provider.sending_domain
+    )
   end
 end
