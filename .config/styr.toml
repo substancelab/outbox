@@ -1,0 +1,8 @@
+[targets.production]
+backend = "ssh"
+host = "188.245.153.230"
+path = "/home/deploy/outbox-production/current"
+user = "deploy"
+
+[tasks.console]
+command = "bundle exec rails console"
