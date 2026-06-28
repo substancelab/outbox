@@ -7,7 +7,7 @@ module Send
     before_action :authenticate_api_key
 
     def create
-      message = Message.find_by(:slug => params[:template_id])
+      message = @authenticated_workspace.messages.find_by(:slug => params[:template_id])
       return render_error("Message not found") unless message
 
       recipients = Array(params.dig(:via, :email, :to)).compact_blank
@@ -55,11 +55,13 @@ module Send
     end
 
     def authenticate_api_key
-      configured_key = Rails.application.credentials.outbox_api_key || ENV.fetch("OUTBOX_API_KEY", nil)
       provided_key = request.headers["Authorization"]&.delete_prefix("Bearer ")
-      matches = configured_key.present? &&
-        ActiveSupport::SecurityUtils.secure_compare(provided_key.to_s, configured_key.to_s)
-      render(:json => {:error => "Unauthorized"}, :status => :unauthorized) unless matches
+      api_key = ApiKey.authenticate(provided_key)
+      if api_key
+        @authenticated_workspace = api_key.workspace
+      else
+        render(:json => {:error => "Unauthorized"}, :status => :unauthorized)
+      end
     end
 
     def render_error(text)

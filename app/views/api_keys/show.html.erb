@@ -1,0 +1,26 @@
+<% content_for :title, translate(".title") %>
+
+<div class="p-4 max-w-lg">
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-heading"><%= translate(".title") %></h1>
+    <p class="mt-1 text-sm text-body-secondary"><%= translate(".description") %></p>
+  </div>
+
+  <div class="p-4 bg-amber-50 border border-amber-300 rounded-base mb-6">
+    <p class="text-sm font-medium text-amber-800 mb-3"><%= translate(".warning") %></p>
+    <div class="flex items-center gap-2">
+      <code
+        id="api-key-value"
+        class="flex-1 text-sm font-mono bg-white border border-amber-200 rounded px-3 py-2 text-heading break-all"
+      ><%= @plaintext_key %></code>
+      <button
+        type="button"
+        onclick="navigator.clipboard.writeText(document.getElementById('api-key-value').textContent)"
+        class="shrink-0 px-3 py-2 text-sm font-medium text-amber-800 bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-base"
+      ><%= translate(".copy") %></button>
+    </div>
+  </div>
+
+  <%= link_to translate(".done"), workspace_api_keys_path(current_workspace),
+    class: Flowbite::Button.classes %>
+</div>

@@ -1,0 +1,26 @@
+<%= form_with(model: [current_workspace, api_key]) do |form| %>
+  <% if api_key.errors.any? %>
+    <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-base text-sm text-red-700">
+      <ul class="list-disc list-inside space-y-1">
+        <% api_key.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :name, translate(".name"), class: "block mb-2 text-sm font-medium text-heading" %>
+    <%= form.text_field :name,
+      class: "bg-neutral-primary-soft border border-default text-body text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-2.5",
+      placeholder: translate(".name_placeholder"),
+      required: true %>
+    <p class="mt-1 text-xs text-body-secondary"><%= translate(".name_hint") %></p>
+  </div>
+
+  <div class="flex gap-3">
+    <%= form.submit translate(".create"), class: Flowbite::Button.classes %>
+    <%= link_to translate(".cancel"), workspace_api_keys_path(current_workspace),
+      :class => Flowbite::Button.classes(:style => :ghost) %>
+  </div>
+<% end %>

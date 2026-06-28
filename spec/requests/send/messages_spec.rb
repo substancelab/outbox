@@ -3,9 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "POST /send/message", :type => :request do
-  let(:api_key) { "test-api-key" }
-  let(:message) { create(:message) }
-  let(:headers) { {"ACCEPT" => "application/json", "Authorization" => "Bearer #{api_key}"} }
+  let(:api_key) { create(:api_key, :workspace => message.workspace).plaintext_key }
   let(:body) do
     {
       "template_id" => message.slug,
@@ -17,8 +15,8 @@ RSpec.describe "POST /send/message", :type => :request do
       "variables" => {"name" => "Alice"},
     }
   end
-
-  before { allow(Rails.application.credentials).to receive(:outbox_api_key).and_return(api_key) }
+  let(:headers) { {"ACCEPT" => "application/json", "Authorization" => "Bearer #{api_key}"} }
+  let(:message) { create(:message) }
 
   describe "authentication" do
     context "when no Authorization header is provided" do
