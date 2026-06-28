@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   root "dashboards#show"
 
   resources :workspaces, :only => [:new, :create] do
-    resources :deliveries, :only => [:index]
+    resources :deliveries, :only => [:index] do
+      resource :retry, :only => [:create], :module => :deliveries
+    end
     resources :messages, :only => [:index, :new, :create, :show, :edit, :update]
     resources :providers
   end

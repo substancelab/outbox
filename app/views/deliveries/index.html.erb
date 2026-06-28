@@ -14,6 +14,7 @@
           <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.message") %></th>
           <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.recipient") %></th>
           <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.status") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"></th>
         </tr>
       </thead>
       <tbody>
@@ -39,11 +40,16 @@
                 <p class="mt-1 text-xs text-fg-danger"><%= delivery.error_message %></p>
               <% end %>
             </td>
+            <td class="px-6 py-4 text-right">
+              <% if delivery.failed? %>
+                <%= button_to translate(".retry"), workspace_delivery_retry_path(current_workspace, delivery), :class => Flowbite::Button.classes(:style => :secondary, :size => :xs) %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
         <% if @deliveries.empty? %>
           <tr>
-            <td colspan="4" class="px-6 py-10 text-center text-body-secondary">
+            <td colspan="5" class="px-6 py-10 text-center text-body-secondary">
               <%= translate(".empty") %>
             </td>
           </tr>
