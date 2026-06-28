@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_28_102435) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_28_110521) do
+  create_table "api_keys", id: uuid, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "key_digest", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.string "workspace_id", limit: 36, null: false
+    t.index ["key_digest"], name: "index_api_keys_on_key_digest", unique: true
+    t.index ["workspace_id"], name: "index_api_keys_on_workspace_id"
+  end
+
   create_table "deliveries", id: uuid, force: :cascade do |t|
     t.text "bcc"
     t.text "cc"
@@ -74,6 +84,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_28_102435) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "api_keys", "workspaces"
   add_foreign_key "deliveries", "messages"
   add_foreign_key "deliveries", "workspaces"
   add_foreign_key "message_variants", "messages"

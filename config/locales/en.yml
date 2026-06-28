@@ -1,4 +1,35 @@
 en:
+  api_keys:
+    create:
+      success: "API key created."
+    destroy:
+      success: "API key removed."
+    form:
+      cancel: "Cancel"
+      create: "Create API key"
+      name: "Name"
+      name_hint: "A label to identify this key, e.g. \"Production\" or \"CI\"."
+      name_placeholder: "e.g. Production"
+    index:
+      columns:
+        actions: "Actions"
+        created_at: "Created"
+        name: "Name"
+      confirm_delete: "Remove \"%{name}\"? This cannot be undone."
+      delete: "Remove"
+      description: "API keys are used to authenticate requests to the send API."
+      empty: "No API keys yet."
+      new: "New API key"
+      title: "API Keys"
+    new:
+      description: "The key will be shown once after creation — store it somewhere safe."
+      title: "New API key"
+    show:
+      copy: "Copy"
+      description: "Copy this key now — it will not be shown again."
+      done: "Done"
+      title: "API key created"
+      warning: "This is your API key. Copy it and store it somewhere safe."
   messages:
     create:
       success: "Message created."
@@ -57,6 +88,7 @@ en:
       create:
         success: "Delivery queued for retry."
   navigation:
+    api_keys: "API Keys"
     dashboard: "Dashboard"
     deliveries: "Deliveries"
     messages: "Messages"

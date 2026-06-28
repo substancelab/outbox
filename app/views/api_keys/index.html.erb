@@ -1,0 +1,49 @@
+<% content_for :title, translate(".title") %>
+
+<div class="p-4">
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold text-heading"><%= translate(".title") %></h1>
+      <p class="mt-1 text-sm text-body-secondary"><%= translate(".description") %></p>
+    </div>
+    <%= link_to translate(".new"), new_workspace_api_key_path(current_workspace),
+      class: Flowbite::Button.classes %>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-xs rounded-base border border-default bg-neutral-primary-soft">
+    <table class="w-full text-sm text-left rtl:text-right text-body">
+      <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+        <tr>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.name") %></th>
+          <th scope="col" class="px-6 py-3 font-medium"><%= translate(".columns.created_at") %></th>
+          <th scope="col" class="px-6 py-3"><span class="sr-only"><%= translate(".columns.actions") %></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @api_keys.each do |api_key| %>
+          <tr class="border-b border-default hover:bg-neutral-primary-soft">
+            <td class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+              <%= api_key.name %>
+            </td>
+            <td class="px-6 py-4 text-body-secondary">
+              <%= api_key.created_at.to_fs(:long) %>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <%= button_to translate(".delete"), workspace_api_key_path(current_workspace, api_key),
+                :method => :delete,
+                :data => {:turbo_confirm => translate(".confirm_delete", :name => api_key.name)},
+                :class => "font-medium text-fg-danger hover:underline" %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @api_keys.empty? %>
+          <tr>
+            <td colspan="3" class="px-6 py-10 text-center text-body-secondary">
+              <%= translate(".empty") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
