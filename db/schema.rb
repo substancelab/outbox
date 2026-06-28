@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_190434) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_28_102435) do
   create_table "deliveries", id: uuid, force: :cascade do |t|
     t.text "bcc"
     t.text "cc"
@@ -57,7 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_190434) do
   end
 
   create_table "providers", id: uuid, force: :cascade do |t|
-    t.text "api_key"
+    t.text "configuration"
     t.datetime "created_at", null: false
     t.string "provider"
     t.string "sender"

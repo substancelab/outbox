@@ -56,6 +56,25 @@ RSpec.describe MailgunAdapter do
       end
     end
 
+    context "when api_host is set to the EU region" do
+      it "posts to the EU endpoint" do
+        eu_url = "https://api.eu.mailgun.net/v3/#{sending_domain}/messages"
+        stub_request(:post, eu_url).
+          to_return(
+            :status => 200,
+            :body => '{"id": "<eu123@mg.example.com>", "message": "Queued. Thank you."}',
+            :headers => {"Content-Type" => "application/json"}
+          )
+        eu_adapter = described_class.new(
+          :api_host => "api.eu.mailgun.net",
+          :api_key => api_key,
+          :sending_domain => sending_domain
+        )
+        eu_adapter.deliver(**deliver_params)
+        expect(WebMock).to have_requested(:post, eu_url)
+      end
+    end
+
     context "when Mailgun rejects with 400 Bad Request" do
       before do
         stub_request(:post, mailgun_url).

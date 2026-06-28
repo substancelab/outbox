@@ -69,6 +69,9 @@ en:
     edit:
       title: "Edit %{sender}"
     form:
+      api_host: "API host"
+      api_host_hint: "Mailgun API host. Use api.eu.mailgun.net for EU region."
+      api_host_placeholder: "e.g. api.eu.mailgun.net"
       api_key: "API key"
       api_key_hint: "Your provider API key. Stored encrypted."
       api_key_hint_edit: "Leave blank to keep the existing API key."

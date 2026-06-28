@@ -43,6 +43,14 @@
     <h2 class="text-base font-semibold text-heading"><%= translate("providers.form.credentials_section") %></h2>
 
     <%= render(Flowbite::InputField::Text.new(
+      attribute: :api_host,
+      form: f,
+      hint: {:content => translate("providers.form.api_host_hint")},
+      label: {:content => translate("providers.form.api_host")},
+      input: {:options => {:placeholder => translate("providers.form.api_host_placeholder")}}
+    )) %>
+
+    <%= render(Flowbite::InputField::Text.new(
       attribute: :api_key,
       form: f,
       hint: {:content => provider.persisted? ? translate("providers.form.api_key_hint_edit") : translate("providers.form.api_key_hint")},

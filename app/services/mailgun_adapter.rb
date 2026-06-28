@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 class MailgunAdapter
-  def initialize(api_key:, sending_domain:)
+  DEFAULT_API_HOST = "api.mailgun.net"
+
+  def initialize(api_key:, sending_domain:, api_host: DEFAULT_API_HOST)
     @api_key = api_key
     @sending_domain = sending_domain
+    @api_host = api_host.presence || DEFAULT_API_HOST
   end
 
   def deliver(params)
     mb = build_message(params)
-    response = Mailgun::Client.new(@api_key).send_message(@sending_domain, mb)
+    response = Mailgun::Client.new(@api_key, @api_host).send_message(@sending_domain, mb)
     response.to_h.fetch("id")
   end
 
