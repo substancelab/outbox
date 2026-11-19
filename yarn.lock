@@ -611,10 +611,10 @@ tslib@^2.4.0, tslib@^2.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
-vite-plugin-ruby@^5.2.2:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/vite-plugin-ruby/-/vite-plugin-ruby-5.2.2.tgz#3a92ba5d67ebb32f655eee4fb5c79b6995b1bb91"
-  integrity sha512-q4UY9Bu0pngcbSmrsJBWbzz35Wzx4vAGMPaOIwZLo6TQ6I2n5/x0BL64GXmOxZ4SeDz+t+nDANKTBpp7CFF9AA==
+vite-plugin-ruby@^5.2.5:
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/vite-plugin-ruby/-/vite-plugin-ruby-5.2.6.tgz#1769c60ba7732e04adf8ffcdb4ff9949e27b4efa"
+  integrity sha512-bGIPoUWHwH4Ym5o5PacFUBaCGaftcUOYptdyPkyIvLfefdu0HbqIuT5aKPrFAp2p8wUMHmC4SqXF8yxtZuk6Tg==
   dependencies:
     obug "^2.0"
     tinyglobby "^0.2.12"
